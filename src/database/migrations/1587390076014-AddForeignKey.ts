@@ -1,0 +1,21 @@
+import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
+
+export default class AddForeignKey1587390076014 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    queryRunner.createForeignKey(
+      'transactions',
+      new TableForeignKey({
+        name: 'TransactionsCategories',
+        columnNames: ['category_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'categories',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    queryRunner.dropForeignKey('transactions', 'TransactionsCategories');
+  }
+}
